@@ -1,0 +1,2 @@
+IMPORTANTE: esquema_original.sql contiene DROP DATABASE IF EXISTS gestion_escolar y elimina la base si ya existe. No lo importes si quieres conservar tus datos.
+Si la base ya existe, solo abre datos_prueba.sql si deseas crear un alumno de prueba (no borra tablas ni registros existentes).
