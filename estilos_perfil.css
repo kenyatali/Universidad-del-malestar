@@ -1,0 +1,206 @@
+:root {
+    --brand: #8DD0C8;
+    --primario-oscuro: #3B7A74;
+    --fondo-principal: #111B1A;
+    --superficie: #1B2826;
+    --bordes: #2C3E3B;
+    --texto-principal: #E2ECE9;
+    --texto-secundario: #92A8A4;
+    --exito: #66BB6A;
+    --advertencia: #FFB74D;
+    --error: #E57373;
+    --informacion: #64B5F6;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: var(--fondo-principal);
+    color: var(--texto-principal);
+    display: flex;
+    height: 100vh;
+    overflow: hidden;
+}
+
+/* Sidebar / Navegación */
+.sidebar {
+    width: 260px;
+    background-color: var(--superficie);
+    border-right: 1px solid var(--bordes);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 20px;
+}
+
+.sidebar-logo {
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.sidebar-logo img {
+    max-width: 120px;
+    height: auto;
+}
+
+.sidebar-menu {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.sidebar-menu li a {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 15px;
+    color: var(--texto-secundario);
+    text-decoration: none;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    font-weight: 500;
+}
+
+.sidebar-menu li.active a,
+.sidebar-menu li a:hover {
+    background-color: var(--primario-oscuro);
+    color: var(--texto-principal);
+}
+
+/* Layout Principal */
+.main-container {
+    flex-grow: 1;
+    display: flex;
+    overflow-y: auto;
+}
+
+.content-area {
+    flex-grow: 1;
+    padding: 30px;
+    overflow-y: auto;
+}
+
+.page-header {
+    background-color: var(--superficie);
+    border: 1px solid var(--bordes);
+    border-radius: 12px;
+    padding: 25px;
+    margin-bottom: 25px;
+}
+
+.page-header h1 {
+    font-size: 1.8rem;
+    color: var(--brand);
+    margin-bottom: 5px;
+}
+
+.page-header p {
+    color: var(--texto-secundario);
+}
+
+/* Tarjetas y Perfil Grid */
+.card {
+    background-color: var(--superficie);
+    border: 1px solid var(--bordes);
+    border-radius: 12px;
+    padding: 25px;
+    margin-bottom: 25px;
+}
+
+.card h2 {
+    font-size: 1.2rem;
+    color: var(--brand);
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border-bottom: 1px solid var(--bordes);
+    padding-bottom: 10px;
+}
+
+.profile-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+}
+
+.profile-field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.profile-field label {
+    font-size: 0.85rem;
+    color: var(--texto-secundario);
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.profile-field .value {
+    background-color: var(--fondo-principal);
+    border: 1px solid var(--bordes);
+    color: var(--texto-principal);
+    padding: 10px 14px;
+    border-radius: 8px;
+    font-size: 0.95rem;
+}
+
+.profile-field input {
+    background-color: var(--fondo-principal);
+    border: 1px solid var(--bordes);
+    color: var(--texto-principal);
+    padding: 10px 14px;
+    border-radius: 8px;
+    font-size: 0.95rem;
+}
+
+.profile-field input:focus {
+    border-color: var(--brand);
+    outline: none;
+}
+
+.btn-submit {
+    background-color: var(--primario-oscuro);
+    color: var(--texto-principal);
+    border: 1px solid var(--brand);
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.btn-submit:hover {
+    background-color: var(--brand);
+    color: var(--fondo-principal);
+}
+
+.badge-activo {
+    color: var(--exito);
+    font-weight: 600;
+}
+
+.badge-inactivo {
+    color: var(--error);
+    font-weight: 600;
+}
+
+.alert-message {
+    padding: 15px;
+    background-color: rgba(102, 187, 106, 0.1);
+    border: 1px solid var(--exito);
+    color: var(--exito);
+    border-radius: 8px;
+    text-align: center;
+    margin-bottom: 20px;
+}
