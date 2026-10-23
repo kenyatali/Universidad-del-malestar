@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Universidad del Malestar - Gestión de Calificaciones</title>
+    <link rel="stylesheet" href="estilos_calificaciones.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+    <!-- SIDEBAR DE NAVEGACIÓN -->
+    <nav class="sidebar">
+        <div>
+            <div class="sidebar-logo">
+                <img src="logo.png" alt="Logo UDM">
+            </div>
+            <ul class="sidebar-menu">
+                <li><a href="inicio.php"><i class="fa-solid fa-house"></i> Inicio</a></li>
+                <li><a href="grupos.php"><i class="fa-solid fa-users"></i> Grupos</a></li>
+                <li><a href="horario.php"><i class="fa-solid fa-calendar-days"></i> Horario</a></li>
+                <li><a href="asistencias.php"><i class="fa-solid fa-clipboard-user"></i> Asistencias</a></li>
+                <li class="active"><a href="calificaciones.php"><i class="fa-solid fa-file-lines"></i> Calificaciones</a></li>
+                <li><a href="reportes.php"><i class="fa-solid fa-chart-pie"></i> Reportes</a></li>
+                <li><a href="perfil.php"><i class="fa-solid fa-user-gear"></i> Mi perfil</a></li>
+                <li><a href="seguridad.php"><i class="fa-solid fa-shield-halved"></i> Seguridad</a></li>
+            </ul>
+        </div>
+        <div>
+            <ul class="sidebar-menu">
+                <li><a href="logout.php" style="color: var(--error);"><i class="fa-solid fa-right-from-bracket"></i> Cerrar sesión</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- CONTENEDOR PRINCIPAL -->
+    <div class="main-container">
+        <div class="content-area">
+            
+            <div class="page-header">
+                <h1>Captura de Calificaciones</h1>
+                <p>Registra y modifica las calificaciones parciales de los tres periodos. La calificación final se calcula mediante el promedio institucional (HU-14, HU-15, HU-16, HU-17).</p>
+            </div>
+
+            <?php if (!empty($mensaje_exito)): ?>
+                <div class="alert-message">
+                    <i class="fa-solid fa-circle-check"></i> <?php echo htmlspecialchars($mensaje_exito); ?>
+                </div>
+            <?php endif; ?>
+
+            <?php if (!empty($mensaje_error)): ?>
+                <div class="alert-message alert-error">
+                    <i class="fa-solid fa-triangle-exclamation"></i> <?php echo htmlspecialchars($mensaje_error); ?>
+                </div>
+            <?php endif; ?>
+
+            <!-- Formulario de Selección de Materia/Grupo -->
+            <div class="card">
+                <h2><i class="fa-solid fa-filter"></i> Seleccionar Grupo</h2>
+                <form method="GET" action="calificaciones.php">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="asignacion">Materia y Grupo:</label>
+                            <select name="asignacion" id="asignacion" required onchange="this.form.submit()">
+                                <option value="">-- Seleccione una materia y grupo --</option>
+                                <?php foreach ($asignaciones as $asig): ?>
+                                    <option value="<?php echo $asig['asignacion_id']; ?>" <?php echo ($asignacion_seleccionada == $asig['asignacion_id']) ? 'selected' : ''; ?>>
+                                        <?php echo htmlspecialchars($asig['materia_nombre'] . ' (' . $asig['grupo_nombre'] . ')'); ?>
+                                    </option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Listado de Alumnos y Calificaciones -->
+            <?php if ($asignacion_seleccionada && !empty($alumnos)): ?>
+                <div class="card">
+                    <h2><i class="fa-solid fa-graduation-cap"></i> Registro de Calificaciones Parciales y Finales</h2>
+                    <p style="color: var(--texto-secundario); font-size: 0.85rem; margin-bottom: 15px;">
+                        * Nota: Los valores permitidos para cada parcial son números enteros del 70 al 100, o bien la clave 'N/A'.
+                    </p>
+                    
+                    <form method="POST" action="calificaciones.php?asignacion=<?php echo $asignacion_seleccionada; ?>">
+                        <input type="hidden" name="guardar_calificaciones" value="1">
+                        
+                        <div class="table-container">
+                            <table>
+                               <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Nombre del Alumno</th>
+                                        <th>Parcial 1</th>
+                                        <th>Parcial 2</th>
+                                        <th>Parcial 3</th>
+                                        <th>Calificación Final</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php foreach ($alumnos as $index => $alum): ?>
+                                        <tr>
+                                            <td><?php echo $index + 1; ?></td>
+                                            <td><strong><?php echo htmlspecialchars($alum['nombre']); ?></strong></td>
+                                            <td>
+                                                <input type="hidden" name="inscripcion_id[]" value="<?php echo $alum['inscripcion_id']; ?>">
+                                                <input type="text" name="parcial1[<?php echo $alum['inscripcion_id']; ?>]" value="<?php echo htmlspecialchars($alum['parcial1'] ?? ''); ?>" class="input-calif" maxlength="3" placeholder="70-100">
+                                            </td>
+                                            <td>
+                                                <input type="text" name="parcial2[<?php echo $alum['inscripcion_id']; ?>]" value="<?php echo htmlspecialchars($alum['parcial2'] ?? ''); ?>" class="input-calif" maxlength="3" placeholder="70-100">
+                                            </td>
+                                            <td>
+                                                <input type="text" name="parcial3[<?php echo $alum['inscripcion_id']; ?>]" value="<?php echo htmlspecialchars($alum['parcial3'] ?? ''); ?>" class="input-calif" maxlength="3" placeholder="70-100">
+                                            </td>
+                                            <td>
+                                                <span class="badge-final"><?php echo number_format($alum['calificacion_final'] ?? 0, 1); ?></span>
+                                            </td>
+                                        </tr>
+                                    <?php endforeach; ?>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div style="margin-top: 20px; text-align: right;">
+                            <button type="submit" class="btn-submit">
+                                <i class="fa-solid fa-floppy-disk"></i> Guardar y Calcular Calificaciones
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            <?php elseif ($asignacion_seleccionada): ?>
+                <div class="card">
+                    <div class="alert-message alert-warning" style="margin: 0;">
+                        Este grupo no cuenta con alumnos inscritos actualmente para registrar calificaciones.
+                    </div>
+                </div>
+            <?php endif; ?>
+
+        </div>
+    </div>
+
+</body>
+</html>
