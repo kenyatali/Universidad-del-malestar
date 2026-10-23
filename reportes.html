@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Universidad del Malestar - Módulo de Reportes</title>
+    <link rel="stylesheet" href="estilos_reportes.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+    <!-- SIDEBAR DE NAVEGACIÓN -->
+    <nav class="sidebar">
+        <div>
+            <div class="sidebar-logo">
+                <img src="logo.png" alt="Logo UDM">
+            </div>
+            <ul class="sidebar-menu">
+                <li><a href="inicio.php"><i class="fa-solid fa-house"></i> Inicio</a></li>
+                <li><a href="grupos.php"><i class="fa-solid fa-users"></i> Grupos</a></li>
+                <li><a href="horario.php"><i class="fa-solid fa-calendar-days"></i> Horario</a></li>
+                <li><a href="asistencias.php"><i class="fa-solid fa-clipboard-user"></i> Asistencias</a></li>
+                <li><a href="calificaciones.php"><i class="fa-solid fa-file-lines"></i> Calificaciones</a></li>
+                <li class="active"><a href="reportes.php"><i class="fa-solid fa-chart-pie"></i> Reportes</a></li>
+                <li><a href="perfil.php"><i class="fa-solid fa-user-gear"></i> Mi perfil</a></li>
+                <li><a href="seguridad.php"><i class="fa-solid fa-shield-halved"></i> Seguridad</a></li>
+            </ul>
+        </div>
+        <div>
+            <ul class="sidebar-menu">
+                <li><a href="logout.php" style="color: var(--error);"><i class="fa-solid fa-right-from-bracket"></i> Cerrar sesión</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- CONTENEDOR PRINCIPAL -->
+    <div class="main-container">
+        <div class="content-area">
+            
+            <div class="page-header">
+                <h1>Reportes Académicos</h1>
+                <p>Genera y exporta reportes de asistencia y desempeño académico filtrados por materia, grupo y rango de fechas (HU-18, HU-19, HU-20).</p>
+            </div>
+
+            <!-- Panel de Filtros -->
+            <div class="card">
+                <h2><i class="fa-solid fa-sliders"></i> Filtros de Reporte</h2>
+                <form method="GET" action="reportes.php">
+                    <div class="filter-grid">
+                        <div class="form-group">
+                            <label for="tipo_reporte">Tipo de Reporte:</label>
+                            <select name="tipo_reporte" id="tipo_reporte" required>
+                                <option value="asistencias" <?php echo ($tipo_reporte == 'asistencias') ? 'selected' : ''; ?>>Reporte de Asistencias</option>
+                                <option value="calificaciones" <?php echo ($tipo_reporte == 'calificaciones') ? 'selected' : ''; ?>>Reporte de Calificaciones</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="asignacion">Materia y Grupo:</label>
+                            <select name="asignacion" id="asignacion" required>
+                                <option value="">-- Seleccionar Asignación --</option>
+                                <?php foreach ($asignaciones as $asig): ?>
+                                    <option value="<?php echo $asig['asignacion_id']; ?>" <?php echo ($asignacion_seleccionada == $asig['asignacion_id']) ? 'selected' : ''; ?>>
+                                        <?php echo htmlspecialchars($asig['materia_nombre'] . ' (' . $asig['grupo_nombre'] . ')'); ?>
+                                    </option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="fecha_inicio">Fecha Inicio:</label>
+                            <input type="date" name="fecha_inicio" id="fecha_inicio" value="<?php echo htmlspecialchars($fecha_inicio); ?>">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="fecha_fin">Fecha Fin:</label>
+                            <input type="date" name="fecha_fin" id="fecha_fin" value="<?php echo htmlspecialchars($fecha_fin); ?>">
+                        </div>
+
+                        <div class="form-group btn-container">
+                            <button type="submit" class="btn-filter">
+                                <i class="fa-solid fa-magnifying-glass"></i> Generar
+                            </button>
+                            <?php if ($asignacion_seleccionada && !empty($resultados)): ?>
+                                <a href="reportes.php?export=csv&tipo_reporte=<?php echo $tipo_reporte; ?>&asignacion=<?php echo $asignacion_seleccionada; ?>&fecha_inicio=<?php echo $fecha_inicio; ?>&fecha_fin=<?php echo $fecha_fin; ?>" class="btn-export">
+                                    <i class="fa-solid fa-file-csv"></i> Exportar CSV
+                                </a>
+                            <?php endif; ?>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Resultados del Reporte -->
+            <?php if ($asignacion_seleccionada): ?>
+                <div class="card">
+                    <h2>
+                        <i class="fa-solid fa-table"></i> 
+                        <?php echo ($tipo_reporte == 'asistencias') ? 'Historial de Asistencias (HU-18)' : 'Desempeño Académico (HU-19)'; ?>
+                    </h2>
+
+                    <?php if (!empty($resultados)): ?>
+                        <div class="table-container">
+                            <table>
+                                <?php if ($tipo_reporte == 'asistencias'): ?>
+                                    <thead>
+                                        <tr>
+                                            <th>Fecha</th>
+                                            <th>Alumno</th>
+                                            <th>Estado</th>
+                                            <th>Observaciones</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?php foreach ($resultados as $row): ?>
+                                            <tr>
+                                                <td><?php echo htmlspecialchars($row['fecha']); ?></td>
+                                                <td><strong><?php echo htmlspecialchars($row['alumno_nombre']); ?></strong></td>
+                                                <td>
+                                                    <span class="badge-<?php echo strtolower($row['estatus']); ?>">
+                                                        <?php echo ucfirst(htmlspecialchars($row['estatus'])); ?>
+                                                    </span>
+                                                </td>
+                                                <td><?php echo htmlspecialchars($row['observaciones'] ?? '-'); ?></td>
+                                            </tr>
+                                        <?php endforeach; ?>
+                                    </tbody>
+                                <?php else: ?>
+                                    <thead>
+                                        <tr>
+                                            <th>Alumno</th>
+                                            <th>Parcial 1</th>
+                                            <th>Parcial 2</th>
+                                            <th>Parcial 3</th>
+                                            <th>Calificación Final</th>
+                                            <th>Estatus</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?php foreach ($resultados as $row): ?>
+                                            <tr>
+                                                <td><strong><?php echo htmlspecialchars($row['alumno_nombre']); ?></strong></td>
+                                                <td><?php echo htmlspecialchars($row['parcial1'] ?? 'N/A'); ?></td>
+                                                <td><?php echo htmlspecialchars($row['parcial2'] ?? 'N/A'); ?></td>
+                                                <td><?php echo htmlspecialchars($row['parcial3'] ?? 'N/A'); ?></td>
+                                                <td><strong><?php echo number_format($row['calificacion_final'] ?? 0, 1); ?></strong></td>
+                                                <td>
+                                                    <span style="color: <?php echo ($row['estatus'] == 'aprobado') ? 'var(--exito)' : (($row['estatus'] == 'reprobado') ? 'var(--error)' : 'var(--advertencia)'); ?>;">
+                                                        <?php echo ucfirst(htmlspecialchars($row['estatus'])); ?>
+                                                    </span>
+                                                </td>
+                                            </tr>
+                                        <?php endforeach; ?>
+                                    </tbody>
+                                <?php endif; ?>
+                            </table>
+                        </div>
+                    <?php else: ?>
+                        <div class="alert-message">
+                            No se encontraron registros con los filtros seleccionados.
+                        </div>
+                    <?php endif; ?>
+                </div>
+            <?php endif; ?>
+
+        </div>
+    </div>
+
+</body>
+</html>
