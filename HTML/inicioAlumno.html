@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portal Alumno - Control Escolar</title>
+    <!-- Enlace al archivo CSS específico para este módulo -->
+    <link rel="stylesheet" href="../CSS/inicioAlumno.css">
+</head>
+<body>
+
+<div class="dashboard-layout">
+    
+    <!-- Sidebar / Navegación Lateral -->
+    <aside class="sidebar">
+        
+        <!-- Bloque Superior: Logo, Título y Menú Principal -->
+        <div class="sidebar-top">
+            <div class="brand-container">
+                <img src="../Recursos/logo.png" alt="Logo UDM" class="brand-logo">
+                <h2 class="brand-title">Control Escolar</h2>
+            </div>
+            
+            <nav>
+                <ul class="nav-list">
+                    <li class="nav-item">
+                        <a href="inicioAlumno.php" class="nav-link active">Inicio</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="perfilAlumno.php" class="nav-link">Perfil del alumno</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="materiasInscripciones.php" class="nav-link">Materias e inscripciones</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="horariosAlumno.php" class="nav-link">Horarios</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="calificacionesAlumno.php" class="nav-link">Calificaciones</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="asistenciasAlumno.php" class="nav-link">Asistencias</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="pagosAdeudos.php" class="nav-link">Pagos y adeudos</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+
+        <!-- Bloque Inferior: Cuenta y seguridad / Cerrar Sesión -->
+        <div class="sidebar-bottom">
+            <ul class="nav-list" style="margin-bottom: 12px;">
+                <li class="nav-item">
+                    <a href="cuentaSeguridad.php" class="nav-link">Cuenta y seguridad</a>
+                </li>
+            </ul>
+            <a href="../PHP/logout.php" class="btn-logout">Cerrar sesión</a>
+        </div>
+
+    </aside>
+
+    <!-- Contenido Principal del Alumno -->
+    <main class="main-content">
+        
+        <header class="top-bar">
+            <div>
+                <h1>Portal del Alumno</h1>
+                <p style="color: var(--text-secondary); margin-top: 4px;">Resumen general y estatus académico</p>
+            </div>
+            
+            <div class="user-info">
+                <span style="font-weight: 500;" id="nombre-usuario"><?php echo htmlspecialchars($nombre ?? 'Alumno'); ?></span>
+                <span class="role-badge" id="rol-usuario"><?php echo htmlspecialchars($rol ?? 'alumno'); ?></span>
+            </div>
+        </header>
+
+        <!-- Tarjetas Informativas / Resumen del Alumno -->
+        <section>
+            <div class="grid-cards">
+                
+                <article class="card">
+                    <h3>Materias Inscritas</h3>
+                    <p style="font-size: 2rem; font-weight: bold; color: var(--primary-brand); margin-top: 8px;">
+                        <?php echo htmlspecialchars($totalMaterias ?? '0'); ?>
+                    </p>
+                </article>
+
+                <article class="card">
+                    <h3>Promedio General</h3>
+                    <p style="font-size: 2rem; font-weight: bold; color: var(--primary-brand); margin-top: 8px;">
+                        <?php echo htmlspecialchars($promedio ?? '0.0'); ?>
+                    </p>
+                </article>
+
+                <article class="card">
+                    <h3>Adeudos Pendientes</h3>
+                    <p style="font-size: 2rem; font-weight: bold; color: var(--state-success); margin-top: 8px;">
+                        <?php echo htmlspecialchars($adeudos ?? '$0.00'); ?>
+                    </p>
+                </article>
+
+            </div>
+        </section>
+
+    </main>
+
+</div>
+
+</body>
+</html>

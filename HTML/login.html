@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iniciar Sesión - Control Escolar</title>
+    <!-- Referencia al archivo CSS específico del login -->
+    <link rel="stylesheet" href="../CSS/login.css">
+</head>
+<body class="login-body">
+
+    <div class="login-card">
+        <div class="login-header">
+            <img src="../Recursos/logo.png" alt="Logo Control Escolar" class="login-logo">
+            <h1>Control Escolar</h1>
+            <p>Ingresa con tu correo institucional</p>
+        </div>
+
+        <form action="../PHP/login.php" method="POST">
+            <div class="form-group">
+                <label for="usuario">Correo Institucional</label>
+                <input type="email" id="usuario" name="usuario" class="form-control" required placeholder="tu.correo@escuela.edu">
+            </div>
+
+            <div class="form-group">
+                <label for="password">Contraseña</label>
+                <input type="password" id="password" name="password" class="form-control" required placeholder="••••••••">
+            </div>
+
+            <button type="submit" class="btn-primary">Iniciar Sesión</button>
+        </form>
+    </div>
+
+</body>
+</html>
