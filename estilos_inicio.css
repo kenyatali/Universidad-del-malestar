@@ -1,0 +1,208 @@
+:root {
+    --brand: #8DD0C8;
+    --primario-oscuro: #3B7A74;
+    --fondo-principal: #111B1A;
+    --superficie: #1B2826;
+    --bordes: #2C3E3B;
+    --texto-principal: #E2ECE9;
+    --texto-secundario: #92A8A4;
+    --exito: #66BB6A;
+    --advertencia: #FFB74D;
+    --error: #E57373;
+    --informacion: #64B5F6;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: var(--fondo-principal);
+    color: var(--texto-principal);
+    display: flex;
+    height: 100vh;
+    overflow: hidden;
+}
+
+/* Sidebar / Navegación */
+.sidebar {
+    width: 260px;
+    background-color: var(--superficie);
+    border-right: 1px solid var(--bordes);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 20px;
+}
+
+.sidebar-logo {
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.sidebar-logo img {
+    max-width: 120px;
+    height: auto;
+}
+
+.sidebar-menu {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    flex-grow: 1;
+}
+
+.sidebar-menu li a {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 15px;
+    color: var(--texto-secundario);
+    text-decoration: none;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    font-weight: 500;
+}
+
+.sidebar-menu li.active a,
+.sidebar-menu li a:hover {
+    background-color: var(--primario-oscuro);
+    color: var(--texto-principal);
+}
+
+/* Contenido Principal */
+.main-container {
+    flex-grow: 1;
+    display: flex;
+    overflow-y: auto;
+}
+
+.content-area {
+    flex-grow: 1;
+    padding: 30px;
+    overflow-y: auto;
+}
+
+/* Header interno de bienvenida */
+.welcome-banner {
+    background-color: var(--superficie);
+    border: 1px solid var(--bordes);
+    border-radius: 12px;
+    padding: 25px;
+    margin-bottom: 25px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.welcome-banner h1 {
+    font-size: 1.8rem;
+    color: var(--brand);
+    margin-bottom: 5px;
+}
+
+.welcome-banner p {
+    color: var(--texto-secundario);
+}
+
+/* Layout en dos columnas: Información académica + Botones de acceso rápido al lado */
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: 2.5fr 1fr;
+    gap: 25px;
+}
+
+.academic-info {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+/* Tarjetas */
+.card {
+    background-color: var(--superficie);
+    border: 1px solid var(--bordes);
+    border-radius: 12px;
+    padding: 20px;
+}
+
+.card h2 {
+    font-size: 1.2rem;
+    color: var(--brand);
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* Tablas */
+.table-container {
+    width: 100%;
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+    font-size: 0.9rem;
+}
+
+th, td {
+    padding: 12px;
+    border-bottom: 1px solid var(--bordes);
+}
+
+th {
+    color: var(--texto-secundario);
+    font-weight: 600;
+}
+
+td {
+    color: var(--texto-principal);
+}
+
+/* Panel lateral de accesos rápidos */
+.quick-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.action-btn {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    background-color: var(--superficie);
+    border: 1px solid var(--bordes);
+    padding: 15px 20px;
+    border-radius: 10px;
+    color: var(--texto-principal);
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.2s ease;
+}
+
+.action-btn:hover {
+    background-color: var(--primario-oscuro);
+    border-color: var(--brand);
+    transform: translateY(-2px);
+}
+
+.action-btn i {
+    font-size: 1.4rem;
+    color: var(--brand);
+}
+
+.alert-message {
+    padding: 15px;
+    background-color: rgba(255, 183, 77, 0.1);
+    border: 1px solid var(--advertencia);
+    color: var(--advertencia);
+    border-radius: 8px;
+    text-align: center;
+}
