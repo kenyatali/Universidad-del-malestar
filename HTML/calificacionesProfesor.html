@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Universidad del Malestar - Gestión de Calificaciones</title>
-    <link rel="stylesheet" href="estilos_calificaciones.css">
+    <link rel="stylesheet" href="../CSS/estilos_calificaciones.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
@@ -13,17 +13,17 @@
     <nav class="sidebar">
         <div>
             <div class="sidebar-logo">
-                <img src="logo.png" alt="Logo UDM">
+                <img src="../Recursos/logo.png" alt="Logo UDM">
             </div>
             <ul class="sidebar-menu">
-                <li><a href="inicio.php"><i class="fa-solid fa-house"></i> Inicio</a></li>
-                <li><a href="grupos.php"><i class="fa-solid fa-users"></i> Grupos</a></li>
-                <li><a href="horario.php"><i class="fa-solid fa-calendar-days"></i> Horario</a></li>
-                <li><a href="asistencias.php"><i class="fa-solid fa-clipboard-user"></i> Asistencias</a></li>
-                <li class="active"><a href="calificaciones.php"><i class="fa-solid fa-file-lines"></i> Calificaciones</a></li>
-                <li><a href="reportes.php"><i class="fa-solid fa-chart-pie"></i> Reportes</a></li>
-                <li><a href="perfil.php"><i class="fa-solid fa-user-gear"></i> Mi perfil</a></li>
-                <li><a href="seguridad.php"><i class="fa-solid fa-shield-halved"></i> Seguridad</a></li>
+                <li><a href="inicioDocente.php"><i class="fa-solid fa-house"></i> Inicio</a></li>
+                <li><a href="gruposProfesor.php"><i class="fa-solid fa-users"></i> Grupos</a></li>
+                <li><a href="horarioProfesor.php"><i class="fa-solid fa-calendar-days"></i> Horario</a></li>
+                <li><a href="asistenciasProfesor.php"><i class="fa-solid fa-clipboard-user"></i> Asistencias</a></li>
+                <li class="active"><a href="calificacionesProfesor.php"><i class="fa-solid fa-file-lines"></i> Calificaciones</a></li>
+                <li><a href="reportesProfesor.php"><i class="fa-solid fa-chart-pie"></i> Reportes</a></li>
+                <li><a href="perfilProfesor.php"><i class="fa-solid fa-user-gear"></i> Mi perfil</a></li>
+                <li><a href="seguridadProfesor.php"><i class="fa-solid fa-shield-halved"></i> Seguridad</a></li>
             </ul>
         </div>
         <div>
@@ -57,7 +57,7 @@
             <!-- Formulario de Selección de Materia/Grupo -->
             <div class="card">
                 <h2><i class="fa-solid fa-filter"></i> Seleccionar Grupo</h2>
-                <form method="GET" action="calificaciones.php">
+                <form method="GET" action="calificacionesProfesor.php">
                     <div class="form-row">
                         <div class="form-group">
                             <label for="asignacion">Materia y Grupo:</label>
@@ -82,7 +82,7 @@
                         * Nota: Los valores permitidos para cada parcial son números enteros del 70 al 100, o bien la clave 'N/A'.
                     </p>
                     
-                    <form method="POST" action="calificaciones.php?asignacion=<?php echo $asignacion_seleccionada; ?>">
+                    <form method="POST" action="calificacionesProfesor.php?asignacion=<?php echo $asignacion_seleccionada; ?>">
                         <input type="hidden" name="guardar_calificaciones" value="1">
                         
                         <div class="table-container">

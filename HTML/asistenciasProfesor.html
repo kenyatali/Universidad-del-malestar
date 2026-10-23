@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Universidad del Malestar - Control de Asistencias</title>
-    <link rel="stylesheet" href="estilos_asistencias.css">
+    <link rel="stylesheet" href="../CSS/estilos_asistencias.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
@@ -13,17 +13,17 @@
     <nav class="sidebar">
         <div>
             <div class="sidebar-logo">
-                <img src="logo.png" alt="Logo UDM">
+                <img src="../Recursos/logo.png" alt="Logo UDM">
             </div>
             <ul class="sidebar-menu">
-                <li><a href="inicio.php"><i class="fa-solid fa-house"></i> Inicio</a></li>
-                <li><a href="grupos.php"><i class="fa-solid fa-users"></i> Grupos</a></li>
-                <li><a href="horario.php"><i class="fa-solid fa-calendar-days"></i> Horario</a></li>
-                <li class="active"><a href="asistencias.php"><i class="fa-solid fa-clipboard-user"></i> Asistencias</a></li>
-                <li><a href="calificaciones.php"><i class="fa-solid fa-file-lines"></i> Calificaciones</a></li>
-                <li><a href="reportes.php"><i class="fa-solid fa-chart-pie"></i> Reportes</a></li>
-                <li><a href="perfil.php"><i class="fa-solid fa-user-gear"></i> Mi perfil</a></li>
-                <li><a href="seguridad.php"><i class="fa-solid fa-shield-halved"></i> Seguridad</a></li>
+                <li><a href="inicioDocente.php"><i class="fa-solid fa-house"></i> Inicio</a></li>
+                <li><a href="gruposProfesor.php"><i class="fa-solid fa-users"></i> Grupos</a></li>
+                <li><a href="horarioProfesor.php"><i class="fa-solid fa-calendar-days"></i> Horario</a></li>
+                <li class="active"><a href="asistenciasProfesor.php"><i class="fa-solid fa-clipboard-user"></i> Asistencias</a></li>
+                <li><a href="calificacionesProfesor.php"><i class="fa-solid fa-file-lines"></i> Calificaciones</a></li>
+                <li><a href="reportesProfesor.php"><i class="fa-solid fa-chart-pie"></i> Reportes</a></li>
+                <li><a href="perfilProfesor.php"><i class="fa-solid fa-user-gear"></i> Mi perfil</a></li>
+                <li><a href="seguridadProfesor.php"><i class="fa-solid fa-shield-halved"></i> Seguridad</a></li>
             </ul>
         </div>
         <div>
@@ -51,7 +51,7 @@
             <!-- Formulario de Selección (Materia/Grupo y Fecha) -->
             <div class="card">
                 <h2><i class="fa-solid fa-filter"></i> Seleccionar Sesión</h2>
-                <form method="GET" action="asistencias.php">
+                <form method="GET" action="asistenciasProfesor.php">
                     <div class="form-row">
                         <div class="form-group">
                             <label for="asignacion">Materia y Grupo:</label>
@@ -77,7 +77,7 @@
                 <div class="card">
                     <h2><i class="fa-solid fa-clipboard-list"></i> Pase de Lista (<?php echo htmlspecialchars($fecha_seleccionada); ?>)</h2>
                     
-                    <form method="POST" action="asistencias.php?asignacion=<?php echo $asignacion_seleccionada; ?>&fecha=<?php echo $fecha_seleccionada; ?>">
+                    <form method="POST" action="asistenciasProfesor.php?asignacion=<?php echo $asignacion_seleccionada; ?>&fecha=<?php echo $fecha_seleccionada; ?>">
                         <input type="hidden" name="guardar_asistencia" value="1">
                         <input type="hidden" name="fecha" value="<?php echo htmlspecialchars($fecha_seleccionada); ?>">
                         

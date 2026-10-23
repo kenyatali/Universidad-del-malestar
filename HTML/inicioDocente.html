@@ -27,19 +27,19 @@
                         <a href="inicioDocente.php" class="nav-link active">Inicio</a>
                     </li>
                     <li class="nav-item">
-                        <a href="gruposDocente.php" class="nav-link">Grupos</a>
+                        <a href="gruposProfesor.php" class="nav-link">Grupos</a>
                     </li>
                     <li class="nav-item">
-                        <a href="horarioDocente.php" class="nav-link">Horario</a>
+                        <a href="horarioProfesor.php" class="nav-link">Horario</a>
                     </li>
                     <li class="nav-item">
-                        <a href="asistenciasDocente.php" class="nav-link">Asistencias</a>
+                        <a href="asistenciasProfesor.php" class="nav-link">Asistencias</a>
                     </li>
                     <li class="nav-item">
-                        <a href="calificacionesDocente.php" class="nav-link">Calificaciones</a>
+                        <a href="calificacionesProfesor.php" class="nav-link">Calificaciones</a>
                     </li>
                     <li class="nav-item">
-                        <a href="reportesDocente.php" class="nav-link">Reportes</a>
+                        <a href="reportesProfesor.php" class="nav-link">Reportes</a>
                     </li>
                 </ul>
             </nav>
@@ -49,10 +49,10 @@
         <div class="sidebar-bottom">
             <ul class="nav-list" style="margin-bottom: 12px;">
                 <li class="nav-item">
-                    <a href="perfilDocente.php" class="nav-link">Mi perfil</a>
+                    <a href="perfilProfesor.php" class="nav-link">Mi perfil</a>
                 </li>
                 <li class="nav-item">
-                    <a href="seguridadDocente.php" class="nav-link">Seguridad</a>
+                    <a href="seguridadProfesor.php" class="nav-link">Seguridad</a>
                 </li>
             </ul>
             <a href="../PHP/logout.php" class="btn-logout">Cerrar sesión</a>
@@ -101,6 +101,57 @@
                 </article>
 
             </div>
+        </section>
+
+
+        <!-- Información académica integrada del trabajo original de la profesora -->
+        <section class="docente-detalle">
+            <article class="card">
+                <h3>Mis grupos y materias asignadas</h3>
+                <?php if (!empty($asignaciones)): ?>
+                    <div class="table-responsive">
+                        <table class="docente-table">
+                            <thead><tr><th>Clave</th><th>Materia</th><th>Grupo</th><th>Cupo máximo</th></tr></thead>
+                            <tbody>
+                            <?php foreach ($asignaciones as $asig): ?>
+                                <tr>
+                                    <td><?php echo htmlspecialchars($asig['clave']); ?></td>
+                                    <td><?php echo htmlspecialchars($asig['materia']); ?></td>
+                                    <td><?php echo htmlspecialchars($asig['grupo']); ?></td>
+                                    <td><?php echo htmlspecialchars((string)$asig['cupo_maximo']); ?></td>
+                                </tr>
+                            <?php endforeach; ?>
+                            </tbody>
+                        </table>
+                    </div>
+                <?php else: ?>
+                    <p class="empty-message">No cuentas con materias o grupos asignados.</p>
+                <?php endif; ?>
+            </article>
+
+            <article class="card">
+                <h3>Mi horario de clases</h3>
+                <?php if (!empty($horarios)): ?>
+                    <div class="table-responsive">
+                        <table class="docente-table">
+                            <thead><tr><th>Día</th><th>Hora</th><th>Materia</th><th>Grupo</th><th>Aula</th></tr></thead>
+                            <tbody>
+                            <?php foreach ($horarios as $h): ?>
+                                <tr>
+                                    <td><?php echo htmlspecialchars(ucfirst($h['dia'])); ?></td>
+                                    <td><?php echo htmlspecialchars(substr($h['hora_inicio'], 0, 5) . ' - ' . substr($h['hora_fin'], 0, 5)); ?></td>
+                                    <td><?php echo htmlspecialchars($h['materia']); ?></td>
+                                    <td><?php echo htmlspecialchars($h['grupo']); ?></td>
+                                    <td><?php echo htmlspecialchars($h['aula']); ?></td>
+                                </tr>
+                            <?php endforeach; ?>
+                            </tbody>
+                        </table>
+                    </div>
+                <?php else: ?>
+                    <p class="empty-message">No se encontraron horarios registrados.</p>
+                <?php endif; ?>
+            </article>
         </section>
 
     </main>

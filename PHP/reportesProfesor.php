@@ -1,8 +1,21 @@
 <?php
 session_start();
-require_once 'conexion.php';
+require_once __DIR__ . '/conexion.php';
 
-$id_profesor = $_SESSION['id_profesor'] ?? 1;
+if (!isset($_SESSION['usuario'], $_SESSION['rol']) || $_SESSION['rol'] !== 'docente') {
+    header('Location: ../HTML/login.html');
+    exit();
+}
+
+$stmtSesion = $pdo->prepare("SELECT id FROM profesores WHERE correo_institucional = ? AND estado = 1");
+$stmtSesion->execute([$_SESSION['usuario']]);
+$id_profesor = (int)($stmtSesion->fetchColumn() ?: 0);
+if ($id_profesor <= 0) {
+    session_unset();
+    session_destroy();
+    header('Location: ../HTML/login.html');
+    exit();
+}
 
 // Parámetros de filtrado
 $tipo_reporte = $_GET['tipo_reporte'] ?? 'asistencias';
@@ -105,5 +118,5 @@ if (isset($_GET['export']) && $_GET['export'] === 'csv' && $asignacion_seleccion
 }
 
 // Cargar la vista HTML separada
-include 'reportes.html';
+include __DIR__ . '/../HTML/reportesProfesor.html';
 ?>

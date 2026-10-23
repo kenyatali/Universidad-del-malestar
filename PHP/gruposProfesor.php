@@ -1,8 +1,21 @@
 <?php
 session_start();
-require_once 'conexion.php';
+require_once __DIR__ . '/conexion.php';
 
-$id_profesor = $_SESSION['id_profesor'] ?? 1;
+if (!isset($_SESSION['usuario'], $_SESSION['rol']) || $_SESSION['rol'] !== 'docente') {
+    header('Location: ../HTML/login.html');
+    exit();
+}
+
+$stmtSesion = $pdo->prepare("SELECT id FROM profesores WHERE correo_institucional = ? AND estado = 1");
+$stmtSesion->execute([$_SESSION['usuario']]);
+$id_profesor = (int)($stmtSesion->fetchColumn() ?: 0);
+if ($id_profesor <= 0) {
+    session_unset();
+    session_destroy();
+    header('Location: ../HTML/login.html');
+    exit();
+}
 
 // Consulta para obtener los grupos asignados al profesor
 $query_grupos = $pdo->prepare("
@@ -25,5 +38,5 @@ $query_grupos->execute([$id_profesor]);
 $grupos = $query_grupos->fetchAll();
 
 // Cargar la vista HTML separada
-include 'grupos.html';
+include __DIR__ . '/../HTML/gruposProfesor.html';
 ?>

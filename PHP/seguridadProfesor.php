@@ -1,11 +1,20 @@
 <?php
 session_start();
-require_once 'conexion.php';
+require_once __DIR__ . '/conexion.php';
 
 // Validar que el profesor esté autenticado y activo (HU-24)
-$id_profesor = $_SESSION['id_profesor'] ?? null;
-if (!$id_profesor) {
-    header("Location: login.php");
+if (!isset($_SESSION['usuario'], $_SESSION['rol']) || $_SESSION['rol'] !== 'docente') {
+    header('Location: ../HTML/login.html');
+    exit();
+}
+
+$stmtSesion = $pdo->prepare("SELECT id FROM profesores WHERE correo_institucional = ? AND estado = 1");
+$stmtSesion->execute([$_SESSION['usuario']]);
+$id_profesor = (int)($stmtSesion->fetchColumn() ?: 0);
+if ($id_profesor <= 0) {
+    session_unset();
+    session_destroy();
+    header('Location: ../HTML/login.html');
     exit();
 }
 
@@ -45,5 +54,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['cambiar_password'])) 
 }
 
 // Cargar la vista HTML separada
-include 'seguridad.html';
+include __DIR__ . '/../HTML/seguridadProfesor.html';
 ?>
