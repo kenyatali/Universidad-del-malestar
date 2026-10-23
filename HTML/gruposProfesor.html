@@ -1,76 +1,250 @@
+```php
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Universidad del Malestar - Mis Grupos</title>
+
     <link rel="stylesheet" href="../CSS/estilos_grupos.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
+
 <body>
 
     <!-- SIDEBAR DE NAVEGACIÓN -->
     <nav class="sidebar">
+
         <div>
+
             <div class="sidebar-logo">
                 <img src="../Recursos/logo.png" alt="Logo UDM">
             </div>
+
             <ul class="sidebar-menu">
-                <li><a href="inicioDocente.php"><i class="fa-solid fa-house"></i> Inicio</a></li>
-                <li class="active"><a href="gruposProfesor.php"><i class="fa-solid fa-users"></i> Grupos</a></li>
-                <li><a href="horarioProfesor.php"><i class="fa-solid fa-calendar-days"></i> Horario</a></li>
-                <li><a href="asistenciasProfesor.php"><i class="fa-solid fa-clipboard-user"></i> Asistencias</a></li>
-                <li><a href="calificacionesProfesor.php"><i class="fa-solid fa-file-lines"></i> Calificaciones</a></li>
-                <li><a href="reportesProfesor.php"><i class="fa-solid fa-chart-pie"></i> Reportes</a></li>
-                <li><a href="perfilProfesor.php"><i class="fa-solid fa-user-gear"></i> Mi perfil</a></li>
-                <li><a href="seguridadProfesor.php"><i class="fa-solid fa-shield-halved"></i> Seguridad</a></li>
+
+                <li>
+                    <a href="inicioDocente.php">
+                        <i class="fa-solid fa-house"></i>
+                        Inicio
+                    </a>
+                </li>
+
+                <li class="active">
+                    <a href="gruposProfesor.php">
+                        <i class="fa-solid fa-users"></i>
+                        Grupos
+                    </a>
+                </li>
+
+                <li>
+                    <a href="horarioProfesor.php">
+                        <i class="fa-solid fa-calendar-days"></i>
+                        Horario
+                    </a>
+                </li>
+
+                <li>
+                    <a href="asistenciasProfesor.php">
+                        <i class="fa-solid fa-clipboard-user"></i>
+                        Asistencias
+                    </a>
+                </li>
+
+                <li>
+                    <a href="calificacionesProfesor.php">
+                        <i class="fa-solid fa-file-lines"></i>
+                        Calificaciones
+                    </a>
+                </li>
+
+                <li>
+                    <a href="reportesProfesor.php">
+                        <i class="fa-solid fa-chart-pie"></i>
+                        Reportes
+                    </a>
+                </li>
+
+                <li>
+                    <a href="perfilProfesor.php">
+                        <i class="fa-solid fa-user-gear"></i>
+                        Mi perfil
+                    </a>
+                </li>
+
+                <li>
+                    <a href="seguridadProfesor.php">
+                        <i class="fa-solid fa-shield-halved"></i>
+                        Seguridad
+                    </a>
+                </li>
+
             </ul>
+
         </div>
+
+
         <div>
+
             <ul class="sidebar-menu">
-                <li><a href="logout.php" style="color: var(--error);"><i class="fa-solid fa-right-from-bracket"></i> Cerrar sesión</a></li>
+
+                <li>
+                    <a href="logout.php" style="color: var(--error);">
+                        <i class="fa-solid fa-right-from-bracket"></i>
+                        Cerrar sesión
+                    </a>
+                </li>
+
             </ul>
+
         </div>
+
     </nav>
+
 
     <!-- CONTENEDOR PRINCIPAL -->
     <div class="main-container">
+
         <div class="content-area">
-            
+
+            <!-- ENCABEZADO -->
             <div class="page-header">
+
                 <h1>Gestión de Grupos</h1>
-                <p>Consulta las materias asignadas, el total de alumnos inscritos y accede a las funciones académicas.</p>
+
+                <p>
+                    Consulta las materias asignadas, el total de alumnos
+                    inscritos y accede a las funciones académicas.
+                </p>
+
             </div>
+
 
             <!-- TARJETA DE GRUPOS -->
             <div class="card">
-                <h2><i class="fa-solid fa-chalkboard-user"></i> Mis Grupos Asignados (HU-04)</h2>
-                
+
+                <h2>
+                    <i class="fa-solid fa-chalkboard-user"></i>
+                    Mis Grupos Asignados (HU-04)
+                </h2>
+
+
                 <div class="table-container">
+
                     <table>
+
                         <thead>
+
                             <tr>
                                 <th>Clave Materia</th>
                                 <th>Materia</th>
                                 <th>Grupo</th>
                                 <th>Alumnos Inscritos</th>
                                 <th>Cupo Máximo</th>
-                                <th style="text-align: center;">Acciones</th>
+                                <th style="text-align: center;">
+                                    Acciones
+                                </th>
                             </tr>
+
                         </thead>
+
+
                         <tbody id="tabla-grupos-body">
-                            <!-- Los datos dinámicos PHP / JS se inyectan aquí -->
+
+                            <?php if (!empty($grupos)): ?>
+
+                                <?php foreach ($grupos as $grupo): ?>
+
+                                    <tr>
+
+                                        <!-- CLAVE DE LA MATERIA -->
+                                        <td>
+                                            <?= htmlspecialchars(
+                                                $grupo['materia_clave'],
+                                                ENT_QUOTES,
+                                                'UTF-8'
+                                            ) ?>
+                                        </td>
+
+
+                                        <!-- NOMBRE DE LA MATERIA -->
+                                        <td>
+                                            <?= htmlspecialchars(
+                                                $grupo['materia_nombre'],
+                                                ENT_QUOTES,
+                                                'UTF-8'
+                                            ) ?>
+                                        </td>
+
+
+                                        <!-- NOMBRE DEL GRUPO -->
+                                        <td>
+                                            <?= htmlspecialchars(
+                                                $grupo['grupo_nombre'],
+                                                ENT_QUOTES,
+                                                'UTF-8'
+                                            ) ?>
+                                        </td>
+
+
+                                        <!-- ALUMNOS INSCRITOS -->
+                                        <td>
+                                            <?= (int)$grupo['total_alumnos'] ?>
+                                        </td>
+
+
+                                        <!-- CUPO MÁXIMO -->
+                                        <td>
+                                            <?= (int)$grupo['cupo_maximo'] ?>
+                                        </td>
+
+
+                                        <!-- ACCIONES -->
+                                        <td style="text-align: center;">
+
+                                            <a
+                                                href="calificacionesProfesor.php?asignacion=<?= (int)$grupo['asignacion_id'] ?>"
+                                                class="btn"
+                                            >
+                                                <i class="fa-solid fa-file-pen"></i>
+                                                Calificaciones
+                                            </a>
+
+                                        </td>
+
+                                    </tr>
+
+                                <?php endforeach; ?>
+
+                            <?php else: ?>
+
+                                <tr>
+
+                                    <td
+                                        colspan="6"
+                                        style="text-align: center;"
+                                    >
+                                        No tienes ningún grupo o materia
+                                        asignada actualmente en el sistema.
+                                    </td>
+
+                                </tr>
+
+                            <?php endif; ?>
+
                         </tbody>
+
                     </table>
+
                 </div>
 
-                <div id="sin-grupos-mensaje" class="alert-message" style="display: none;">
-                    No tienes ningún grupo o materia asignada actualmente en el sistema.
-                </div>
             </div>
 
         </div>
+
     </div>
 
 </body>
 </html>
+```
